@@ -83,7 +83,7 @@ Each csv file follows the format:
 - `text`: the full path (input, target, intermediate steps, answer). There might be multiple paths for one case. 
 
 > [!NOTE]
-> To re-generate the datasets using our accelerated codebase ⚡. First, generate the raw LLM reasoning paths:
+> To re-generate the datasets using [our accelerated codebase](https://github.com/twni2016/llm-reasoning-uft/tree/main/reasoners) (which batches inputs via vLLM for a 100–1000× speedup ⚡). First, generate the raw LLM reasoning paths:
 > ```bash
 > bash scripts/countdown/data_gen.sh # CoT
 > bash scripts/countdown/classic_gen.sh # classic BFS, DFS
@@ -97,7 +97,7 @@ Each csv file follows the format:
 
 ### 2. Fine-tuning and evaluation 🧠
 
-First, install the alignment package locally and make sure you have logged in to the huggingface and wandb.
+First, install the alignment package [locally](https://github.com/twni2016/llm-reasoning-uft/tree/main/alignment) and make sure you have logged in to the huggingface and wandb.
 ```bash
 cd alignment/ && pip install -e .
 ```
