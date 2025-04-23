@@ -1,0 +1,115 @@
+# Model arguments
+model_name_or_path: Qwen/Qwen2.5-Math-7B
+model_revision: main
+torch_dtype: bfloat16
+attn_implementation: flash_attention_2
+
+# Data training arguments
+dataset_root: ../data/game24/corpora/
+positive_dataset_sources: 
+- <model_name>/cot_1/correct_train.csv
+- <model_name>/cot_2/correct_train.csv
+- <model_name>/cot_3/correct_train.csv
+- <model_name>/cot_4/correct_train.csv
+- <model_name>/cot_5/correct_train.csv
+- <model_name>/cot_6/correct_train.csv
+- <model_name>/cot_7/correct_train.csv
+- <model_name>/cot_8/correct_train.csv
+- <model_name>/cot_9/correct_train.csv
+- <model_name>/bfs_1/correct_train.csv
+- <model_name>/bfs_2/correct_train.csv
+- <model_name>/bfs_3/correct_train.csv
+- <model_name>/bfs_4/correct_train.csv
+- <model_name>/bfs_5/correct_train.csv
+- <model_name>/bfs_6/correct_train.csv
+- <model_name>/bfs_7/correct_train.csv
+- <model_name>/bfs_8/correct_train.csv
+- <model_name>/bfs_9/correct_train.csv
+- <model_name>/bfs_10/correct_train.csv
+- <model_name>/bfs_11/correct_train.csv
+- <model_name>/bfs_12/correct_train.csv
+- <model_name>/mcts_1/correct_train.csv
+- <model_name>/mcts_2/correct_train.csv
+- <model_name>/mcts_3/correct_train.csv
+- <model_name>/mcts_4/correct_train.csv
+- <model_name>/mcts_5/correct_train.csv
+- <model_name>/mcts_6/correct_train.csv
+negative_dataset_sources: 
+- <model_name>/cot_1/failed_train.csv
+- <model_name>/cot_2/failed_train.csv
+- <model_name>/cot_3/failed_train.csv
+- <model_name>/cot_4/failed_train.csv
+- <model_name>/cot_5/failed_train.csv
+- <model_name>/cot_6/failed_train.csv
+- <model_name>/cot_7/failed_train.csv
+- <model_name>/cot_8/failed_train.csv
+- <model_name>/cot_9/failed_train.csv
+- <model_name>/bfs_1/failed_train.csv
+- <model_name>/bfs_2/failed_train.csv
+- <model_name>/bfs_3/failed_train.csv
+- <model_name>/bfs_4/failed_train.csv
+- <model_name>/bfs_5/failed_train.csv
+- <model_name>/bfs_6/failed_train.csv
+- <model_name>/bfs_7/failed_train.csv
+- <model_name>/bfs_8/failed_train.csv
+- <model_name>/bfs_9/failed_train.csv
+- <model_name>/bfs_10/failed_train.csv
+- <model_name>/bfs_11/failed_train.csv
+- <model_name>/bfs_12/failed_train.csv
+- <model_name>/mcts_1/failed_train.csv
+- <model_name>/mcts_2/failed_train.csv
+- <model_name>/mcts_3/failed_train.csv
+- <model_name>/mcts_4/failed_train.csv
+- <model_name>/mcts_5/failed_train.csv
+- <model_name>/mcts_6/failed_train.csv
+dataset_text_field: text
+dataset_num_proc: 16
+chat_template: null
+train_on_completion_only: true
+
+# SFT trainer config
+## UL related
+ul_loss_type: unlikelihood
+ul_alpha: 0.0
+
+# logging
+output_dir: logs
+overwrite_output_dir: true
+log_level: info
+logging_steps: 5  
+logging_strategy: steps
+do_eval: false # we eval after training finishes
+eval_on_start: false
+eval_strategy: 'no'
+
+# Note: we save all ckpts for future evaluation, because eval_loss is not a reliable signal in our task
+num_train_epochs: 3
+save_only_model: true # to save disk and time
+load_best_model_at_end: false
+save_strategy: steps
+save_steps: 0.05
+
+packing: false # make sure it is false, since default packing causes contamination
+max_seq_length: 256 # the actual max_seq_length depends on the minibatch
+per_device_eval_batch_size: 16
+eval_accumulation_steps: 1
+per_device_train_batch_size: 8
+gradient_accumulation_steps: 1
+
+learning_rate: 2.0e-05
+lr_scheduler_type: cosine_with_min_lr
+warmup_ratio: 0.1
+lr_scheduler_kwargs: 
+  min_lr: 7.0e-08
+
+seed: 42
+bf16: true
+gradient_checkpointing: true
+gradient_checkpointing_kwargs:
+  use_reentrant: False
+remove_unused_columns: true
+report_to:
+- wandb
+push_to_hub: false
+hub_model_id: null
+hub_strategy: every_save

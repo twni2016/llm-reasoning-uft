@@ -1,0 +1,15 @@
+.idea/
+notebooks/
+__pycache__/
+*.egg-info/
+*.log
+*.egg-info/
+*.out
+*.tmp
+.env
+.run/
+.DS_Store
+.vscode/
+build/
+
+/data

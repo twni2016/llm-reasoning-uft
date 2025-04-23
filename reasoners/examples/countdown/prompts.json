@@ -1,0 +1,3 @@
+{
+    "ft_prompt": "Use numbers and basic arithmetic operations (+ - * /) to obtain the target number.\nInput: {input}\nTarget: {target}\nSteps:\n"
+}
