@@ -31,20 +31,21 @@ from alignment import (
     DataArguments,
     H4ArgumentParser,
     ModelArguments,
-    ULConfig,
+    UFTConfig,
     get_checkpoint,
     get_datasets,
+    trim_negative_data,
     get_kbit_device_map,
     get_peft_config,
     get_quantization_config,
     get_tokenizer,
 )
-from fine_tune.data_prep import trim_negative_data, template_API
-from fine_tune.ul_trainer import ULTrainer
+from fine_tune.data_prep import template_API
+from fine_tune.uft_trainer import UFTTrainer
 
 
 def main():
-    parser = H4ArgumentParser((ModelArguments, DataArguments, ULConfig))
+    parser = H4ArgumentParser((ModelArguments, DataArguments, UFTConfig))
     model_args, data_args, training_args = parser.parse()
 
     model_name = model_args.model_name_or_path.split("/")[-1]
@@ -81,7 +82,7 @@ def main():
     # Log on each process a small summary
     logger.info(f"Model parameters {model_args}")
     logger.info(f"Data parameters {data_args}")
-    logger.info(f"ULConfig: {training_args}")
+    logger.info(f"UFTConfig: {training_args}")
 
     # Check for last checkpoint
     last_checkpoint = get_checkpoint(training_args)
@@ -209,7 +210,7 @@ def main():
     ########################
     # Initialize the Trainer
     ########################
-    trainer = ULTrainer(
+    trainer = UFTTrainer(
         model=model,
         args=training_args,
         tokenizer=tokenizer,

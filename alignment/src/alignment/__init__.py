@@ -2,13 +2,13 @@ __version__ = "0.4.0.dev0"
 
 from .configs import (
     DataArguments,
-    DPOConfig,
     H4ArgumentParser,
     ModelArguments,
     SFTConfig,
-    ULConfig,
+    UFTConfig,
+    PrefConfig,
 )
-from .data import apply_chat_template, get_datasets
+from .data import get_datasets, trim_negative_data
 from .model_utils import (
     get_checkpoint,
     get_kbit_device_map,
@@ -21,13 +21,13 @@ from .model_utils import (
 
 __all__ = [
     "DataArguments",
-    "DPOConfig",
     "H4ArgumentParser",
     "ModelArguments",
     "SFTConfig",
-    "ULConfig",
-    "apply_chat_template",
+    "UFTConfig",
+    "PrefConfig",
     "get_datasets",
+    "trim_negative_data",
     "get_checkpoint",
     "get_kbit_device_map",
     "get_peft_config",

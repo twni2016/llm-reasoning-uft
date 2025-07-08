@@ -21,7 +21,11 @@ def main(base_dir: str):
         else:
             print(file, "number of rows", len(df))
             # select the top row, since df is ranked
-            top_row = df.iloc[0].copy()
+            if df.iloc[0]["Optimization Step"] == "0":
+                # this is the base model row, select the second-best row
+                top_row = df.iloc[1].copy()
+            else:
+                top_row = df.iloc[0].copy()
             df["Optimization Step"] = pd.to_numeric(
                 df["Optimization Step"], errors="coerce"
             )

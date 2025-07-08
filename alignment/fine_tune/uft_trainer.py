@@ -6,7 +6,7 @@ from torch.utils.data import DataLoader, RandomSampler
 import torch.nn.functional as F
 
 
-class ULTrainer(SFTTrainer):
+class UFTTrainer(SFTTrainer):
     def __init__(
         self,
         positive_dataset=None,

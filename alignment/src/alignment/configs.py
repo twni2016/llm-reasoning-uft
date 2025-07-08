@@ -287,27 +287,7 @@ class SFTConfig(trl.SFTConfig):
 
 
 @dataclass
-class DPOConfig(trl.DPOConfig):
-    """
-    Arguments related to the DPO training process itself. For all parameters, see: https://huggingface.co/docs/transformers/v4.39.3/en/main_classes/trainer#transformers.TrainingArguments
-    """
-
-    hub_model_revision: Optional[str] = field(
-        default="main",
-        metadata={"help": ("The Hub model branch to push the model to.")},
-    )
-    logging_first_step: bool = field(
-        default=True,
-        metadata={
-            "help": ("Whether to log and evaluate the first global_step or not.")
-        },
-    )
-    optim: Optional[str] = field(default="rmsprop")
-    remove_unused_columns: bool = field(default=False)
-
-
-@dataclass
-class ULConfig(SFTConfig):
+class UFTConfig(SFTConfig):
     ul_alpha: float = field(
         default=0.0,
         metadata={
@@ -320,3 +300,42 @@ class ULConfig(SFTConfig):
         default="unlikelihood",
         metadata={"help": ("the choice of neg_loss.")},
     )
+
+
+@dataclass
+class PrefConfig(trl.CPOConfig):
+    # We can use SimPO easily by turning on loss_type="simpo" and cpo_alpha=0.0 in the CPOConfig.
+    # We can use CPO-SimPO easily by turning on loss_type="simpo" and cpo_alpha=1.0 in the CPOConfig.
+    loss_type: str = field(
+        default="simpo",
+        metadata={"help": "The choice of loss type for CPO training."},
+    )
+    cpo_alpha: float = field(
+        default=1.0,
+        metadata={"help": "Weight of the BC regularizer in CPO training."},
+    )
+    hub_model_revision: Optional[str] = field(
+        default="main",
+        metadata={"help": ("The Hub model branch to push the model to.")},
+    )
+    logging_first_step: bool = field(
+        default=True,
+        metadata={
+            "help": ("Whether to log and evaluate the first global_step or not.")
+        },
+    )
+    optim: Optional[str] = field(default="adamw_torch")
+    remove_unused_columns: bool = field(default=False)
+    num_copy_positive: int = field(
+        default=1,
+        metadata={
+            "help": (
+                "Number of copies of positive dataset to create for preference-based methods."
+            )
+        },
+    )
+
+    def __post_init__(self):
+        super().__post_init__()
+        # wandb will only use two dirnames
+        self.run_name = "-".join(self.output_dir.split("/")[-3:])

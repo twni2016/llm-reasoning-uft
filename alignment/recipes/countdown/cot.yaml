@@ -5,7 +5,7 @@ torch_dtype: bfloat16
 attn_implementation: flash_attention_2
 
 # Data training arguments
-dataset_root: ../data/countdown/
+dataset_root: ../data/countdown/corpora/
 positive_dataset_sources: 
 - <model_name>/cot_1/correct_train.csv
 - <model_name>/cot_2/correct_train.csv

@@ -83,7 +83,7 @@ eval_on_start: false
 eval_strategy: 'no'
 
 # Note: we save all ckpts for future evaluation, because eval_loss is not a reliable signal in our task
-num_train_epochs: 3
+num_train_epochs: 10
 save_only_model: true # to save disk and time
 load_best_model_at_end: false
 save_strategy: steps

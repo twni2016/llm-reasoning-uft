@@ -33,7 +33,11 @@ def main(
         ckpt_step = df["Optimization Step"].at[0]
         ckpt_names = [f"checkpoint-{ckpt_step}"]
         print("find the best ckpt", ckpt_names)
-    except:
+        if int(ckpt_step) == 0:
+            print("the best ckpt is base model, skip search")
+            exit()
+        skip_search = False
+    except Exception as e:  # does not capture SystemExit
         # evaluate all checkpoints
         ckpt_names = []
         for folder in os.listdir(model_pth):
@@ -41,6 +45,7 @@ def main(
                 ckpt_names.append(folder)
         ckpt_names = sorted(ckpt_names, key=lambda name: int(name.split("-")[1]))
         print(ckpt_names)
+        skip_search = True
 
     for ckpt_name in ckpt_names:
         base_model = VLLM(
@@ -95,7 +100,7 @@ def main(
         n_beam = 6 if "7B" in model_pth else 10
         w_exp = 1 if "7B" in model_pth else 2
 
-        if f"all_game24_bfs{n_beam}.csv" in os.listdir(log_subdir):
+        if skip_search or f"all_game24_bfs{n_beam}.csv" in os.listdir(log_subdir):
             print(f"skip all_game24_bfs{n_beam}.csv")
         else:
             # ToT
@@ -111,7 +116,7 @@ def main(
                 output_name=f"bfs{n_beam}",
             )
 
-        if f"all_game24_mcts{w_exp}.csv" in os.listdir(log_subdir):
+        if skip_search or f"all_game24_mcts{w_exp}.csv" in os.listdir(log_subdir):
             print(f"skip all_game24_mcts{w_exp}.csv")
         else:
             # MCTS
