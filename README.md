@@ -2,7 +2,7 @@
 
 By [Tianwei Ni](https://twni2016.github.io/), [Allen Nie](https://anie.me/about), [Sapana Chaudhary](https://sapanachaudhary.github.io/), [Yao Liu](http://yao-liu.com/), [Huzefa Rangwala](https://cs.gmu.edu/~rangwala/), [Rasool Fakoor](https://sites.google.com/site/rfakoor) at Amazon Web Services.
 
-See the paper at https://arxiv.org/abs/2504.11364 for details. 
+Accepted by **Transactions on Machine Learning Research (TMLR)**, 2025. See the paper at https://arxiv.org/abs/2504.11364 for details. 
 
 ## Overview
 
@@ -147,11 +147,14 @@ This codebase is inspired by and/or incorporates code from the following work:
 
 ## Citation
 ```bibtex
-@article{ni2025teaching,
-  title={Offline Learning and Forgetting for Reasoning with Large Language Models},
-  author={Ni, Tianwei and Nie, Allen and Chaudhary, Sapana and Liu, Yao and Rangwala, Huzefa and Fakoor, Rasool},
-  journal={arXiv preprint arXiv:2504.11364},
-  year={2025}
+@article{
+   ni2025offline,
+   title={Offline Learning and Forgetting for Reasoning with Large Language Models},
+   author={Tianwei Ni and Allen Nie and Sapana Chaudhary and Yao Liu and Huzefa Rangwala and Rasool Fakoor},
+   journal={Transactions on Machine Learning Research},
+   issn={2835-8856},
+   year={2025},
+   url={https://openreview.net/forum?id=RF6raEUATc}
 }
 ```
 
